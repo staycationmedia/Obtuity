@@ -19,20 +19,8 @@ const PORT = process.env.PORT || 3000;
 const HOST = process.env.HOST || '0.0.0.0';
 
 const fastify = Fastify({
-  logger: {
-    transport: {
-      target: 'pino-pretty',
-      options: {
-        translateTime: 'HH:MM:ss Z',
-        ignore: 'pid,hostname'
-      }
-    }
-  },
+  logger: true,
   trustProxy: true
-});
-
-await fastify.register(cors, {
-  origin: '*'
 });
 
 await fastify.register(rateLimit, {
