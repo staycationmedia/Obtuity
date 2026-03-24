@@ -1,31 +1,25 @@
 import { createClient } from '@supabase/supabase-js';
-import dotenv from 'dotenv';
 
-dotenv.config();
+const supabaseUrl = process.env.https://uaukcstlscurtfuugyij.supabase.co;
+const supabaseKey = process.env.eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InVhdWtjc3Rsc2N1dHJmdXVneWp2Iiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc3NDM1OTg2OSwiZXhwIjoyMDg5OTM1ODY5fQ.pbcfiOgihbEKpVh3IYGRMrcdclXryhyYpvJQFGmeRUQ;
 
-const supabaseUrl = process.env.VITE_SUPABASE_URL;
-const supabaseKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
-
-if (!supabaseUrl || !supabaseKey) {
-  throw new Error('Missing Supabase credentials in .env file');
-}
-
-export const supabase = createClient(supabaseUrl, supabaseKey, {
-  auth: {
-    autoRefreshToken: false,
-    persistSession: false
-  }
-});
+export const supabase = createClient(supabaseUrl, supabaseKey);
 
 export async function testConnection() {
   try {
-    const { data, error } = await supabase.from('publishers').select('count').single();
-    if (error && error.code !== 'PGRST116') {
-      throw error;
+    const { data, error } = await supabase
+      .from('_test_connection')
+      .select('*')
+      .limit(1);
+
+    if (error) {
+      console.error('Supabase error:', error.message);
+      return false;
     }
+
     return true;
-  } catch (error) {
-    console.error('Database connection test failed:', error);
+  } catch (err) {
+    console.error('Connection failed:', err.message);
     return false;
   }
 }
