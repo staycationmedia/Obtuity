@@ -83,7 +83,18 @@ if (process.env.VERCEL !== '1') {
   start();
 }
 
+let initialized = false;
+
 export default async function handler(req, res) {
   await fastify.ready();
+
+  if (!initialized) {
+    const dbConnected = await testConnection();
+    if (dbConnected) {
+      await feedManager.loadFeeds();
+    }
+    initialized = true;
+  }
+
   fastify.server.emit('request', req, res);
 }
