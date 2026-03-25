@@ -1,6 +1,10 @@
 {
   "routes": [
-    { "src": "/api/(.*)", "dest": "/api/$1" },
+    { "src": "/assets/(.*)", "dest": "/dist/assets/$1" },
+    { "src": "/favicon.ico", "dest": "/dist/favicon.ico" },
+    { "src": "/health", "dest": "/index.js" },
+    { "src": "/click", "dest": "/index.js" },
+    { "src": "/admin/reload-feeds", "dest": "/index.js" },
     { "src": "/(.*)", "dest": "/index.html" }
   ]
 }
